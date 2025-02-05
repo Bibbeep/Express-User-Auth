@@ -1,0 +1,43 @@
+{
+  "name": "express-user-auth",
+  "version": "1.0.0",
+  "description": "A containerized REST API for user authentication using Node.js, Express.js, PostgreSQL, and Docker.",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "start:dev": "nodemon src/server.js",
+    "db:migrate": "node-pg-migrate -m src/db/migrations",
+    "setup": "npm run db:migrate up && npm start",
+    "lint": "eslint",
+    "lint:fix": "eslint --fix",
+    "prepare": "husky"
+  },
+  "keywords": [
+    "express",
+    "postgresql",
+    "docker"
+  ],
+  "author": "Muhammad Habib Al Farabi",
+  "license": "ISC",
+  "devDependencies": {
+    "@eslint/js": "^9.19.0",
+    "dotenv": "^16.4.7",
+    "eslint": "^9.19.0",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-plugin-prettier": "^5.2.3",
+    "globals": "^15.14.0",
+    "husky": "^9.1.7",
+    "nodemon": "^3.1.9",
+    "prettier": "^3.4.2"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "morgan": "^1.10.0",
+    "node-pg-migrate": "^7.9.0",
+    "pg": "^8.13.1",
+    "redis": "^4.7.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
+  }
+}
