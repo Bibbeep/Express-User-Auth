@@ -46,6 +46,7 @@ To set up and run the app using Docker and Docker Compose, follow these steps:
 - `POST /api/v1/auth/login` - Logs in a user account
 - `POST /api/v1/auth/logout` - Logs out a user account
 - `GET /api/v1/health` - Retrieves endpoints health check status
+- `GET /api/v1/docs` - Retrieves Swagger Documentation page
 
 ### Request/Response Examples
 
