@@ -254,6 +254,189 @@ const FailedResponse500 = {
     },
 };
 
+const LoginRequestBody = {
+    type: 'object',
+    properties: {
+        email: {
+            type: 'string',
+            format: 'email',
+        },
+        password: {
+            type: 'string',
+            format: 'password',
+        },
+    },
+    example: {
+        email: 'test@mail.com',
+        password: 'weakpassword321',
+    },
+};
+
+const LoginSuccessResponse200 = {
+    type: 'object',
+    properties: {
+        success: {
+            type: 'boolean',
+        },
+        statusCode: {
+            type: 'integer',
+        },
+        data: {
+            type: 'object',
+            properties: {
+                accessToken: {
+                    type: 'string',
+                },
+            },
+        },
+        message: {
+            type: 'string',
+        },
+        errors: {
+            type: 'array',
+            nullable: true,
+        },
+    },
+    example: {
+        success: true,
+        statusCode: 200,
+        data: {
+            accessToken:
+                'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywidXNlcm5hbWUiOiJBbGV4YSIsImlhdCI6MTczODg0NTcxMiwiZXhwIjoxNzM5NDUwNTEyfQ.jaOEpQcfyzZs7sDWz6cG7k3oShiFQkj0wkhEabaScOA',
+        },
+        message: 'Successfully logged in.',
+        errors: null,
+    },
+};
+
+const LoginFailedResponse400 = {
+    type: 'object',
+    properties: {
+        success: {
+            type: 'boolean',
+        },
+        statusCode: {
+            type: 'integer',
+        },
+        data: {
+            type: 'object',
+            nullable: true,
+        },
+        message: {
+            type: 'string',
+        },
+        errors: {
+            type: 'array',
+            items: {
+                type: 'object',
+                properties: {
+                    message: {
+                        type: 'string',
+                    },
+                    context: {
+                        type: 'object',
+                        properties: {
+                            key: {
+                                type: 'string',
+                            },
+                            value: {
+                                type: ['string', 'integer', 'object'],
+                                nullable: true,
+                            },
+                        },
+                    },
+                },
+            },
+        },
+    },
+    example: {
+        success: false,
+        statusCode: 400,
+        data: null,
+        message: 'Request body validation error.',
+        errors: [
+            {
+                message: '"email" must be a valid email',
+                context: {
+                    key: 'email',
+                    value: 'alexamail.com',
+                },
+            },
+            {
+                message: '"password" is required',
+                context: {
+                    key: 'password',
+                    value: null,
+                },
+            },
+        ],
+    },
+};
+
+const LoginFailedResponse401 = {
+    type: 'object',
+    properties: {
+        success: {
+            type: 'boolean',
+        },
+        statusCode: {
+            type: 'integer',
+        },
+        data: {
+            type: 'object',
+            nullable: true,
+        },
+        message: {
+            type: 'string',
+        },
+        errors: {
+            type: 'array',
+            items: {
+                type: 'object',
+                properties: {
+                    message: {
+                        type: 'string',
+                    },
+                    context: {
+                        type: 'object',
+                        properties: {
+                            key: {
+                                type: 'string',
+                            },
+                            value: {
+                                type: ['string', 'integer', 'object'],
+                                nullable: true,
+                            },
+                        },
+                    },
+                },
+            },
+        },
+    },
+    example: {
+        success: false,
+        statusCode: 401,
+        data: null,
+        message: 'Wrong email or password.',
+        errors: [
+            {
+                message: 'Incorrect email',
+                context: {
+                    key: 'email',
+                    value: 'johndoe@mail.com',
+                },
+            },
+            {
+                message: 'Incorrect password',
+                context: {
+                    key: 'password',
+                    value: '***********',
+                },
+            },
+        ],
+    },
+};
+
 module.exports = {
     registerSchema,
     loginSchema,
@@ -262,4 +445,8 @@ module.exports = {
     RegisterFailedResponse400,
     RegisterFailedResponse409,
     FailedResponse500,
+    LoginRequestBody,
+    LoginSuccessResponse200,
+    LoginFailedResponse400,
+    LoginFailedResponse401,
 };
