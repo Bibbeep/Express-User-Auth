@@ -4,6 +4,9 @@ const { validateRegister, validateLogin } = require('../utils/validator');
 module.exports = {
     register: async (req, res, next) => {
         try {
+            console.log(req.method);
+            console.log(req.baseUrl);
+            console.log(req.path);
             const { error, value } = validateRegister(req.body);
 
             if (error) {
@@ -29,6 +32,9 @@ module.exports = {
     },
     login: async (req, res, next) => {
         try {
+            console.log(req.method);
+            console.log(req.baseUrl);
+            console.log(req.path);
             const { error, value } = validateLogin(req.body);
 
             if (error) {
@@ -52,6 +58,9 @@ module.exports = {
     },
     logout: async (req, res, next) => {
         try {
+            console.log(req.method);
+            console.log(req.baseUrl);
+            console.log(req.path);
             await AuthModel.logout(req);
 
             return res.status(200).json({

@@ -205,6 +205,36 @@ const RegisterFailedResponse409 = {
     },
 };
 
+const FailedResponse429 = {
+    type: 'object',
+    properties: {
+        success: {
+            type: 'boolean',
+        },
+        statusCode: {
+            type: 'integer',
+        },
+        data: {
+            type: 'object',
+            nullable: true,
+        },
+        message: {
+            type: 'string',
+        },
+        errors: {
+            type: 'object',
+            nullable: true,
+        },
+    },
+    example: {
+        success: false,
+        statusCode: 429,
+        data: null,
+        message: 'Too many requests, please try again later.',
+        errors: null,
+    },
+};
+
 const FailedResponse500 = {
     type: 'object',
     properties: {
@@ -531,6 +561,7 @@ module.exports = {
     RegisterSuccessResponse201,
     RegisterFailedResponse400,
     RegisterFailedResponse409,
+    FailedResponse429,
     FailedResponse500,
     LoginRequestBody,
     LoginSuccessResponse200,

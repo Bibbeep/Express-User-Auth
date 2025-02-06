@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const { verifyToken } = require('../middlewares/authentication.js');
+const { rateLimiter } = require('../middlewares/rateLimiter.js');
 const {
     register,
     login,
@@ -37,6 +38,12 @@ const {
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/RegisterFailedResponse409'
+ *       429:
+ *         description: Too many requests
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/FailedResponse429'
  *       500:
  *         description: Internal server error
  *         content:
@@ -44,7 +51,17 @@ const {
  *             schema:
  *               $ref: '#/components/schemas/FailedResponse500'
  */
-router.use('/register', register);
+router.use(
+    '/register',
+    rateLimiter({
+        endpoint: '/api/v1/auth/register',
+        rateLimit: {
+            time: 3600,
+            limit: 5,
+        },
+    }),
+    register,
+);
 
 /**
  * @openapi
@@ -77,6 +94,12 @@ router.use('/register', register);
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/LoginFailedResponse401'
+ *       429:
+ *         description: Too many requests
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/FailedResponse429'
  *       500:
  *         description: Internal server error
  *         content:
@@ -84,7 +107,17 @@ router.use('/register', register);
  *             schema:
  *               $ref: '#/components/schemas/FailedResponse500'
  */
-router.use('/login', login);
+router.use(
+    '/login',
+    rateLimiter({
+        endpoint: '/api/v1/auth/login',
+        rateLimit: {
+            time: 900,
+            limit: 10,
+        },
+    }),
+    login,
+);
 
 /**
  * @openapi
@@ -115,6 +148,12 @@ router.use('/login', login);
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/LogoutFailedResponse401'
+ *       429:
+ *         description: Too many requests
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/FailedResponse429'
  *       500:
  *         description: Internal server error
  *         content:
@@ -122,6 +161,17 @@ router.use('/login', login);
  *             schema:
  *               $ref: '#/components/schemas/FailedResponse500'
  */
-router.use('/logout', verifyToken, logout);
+router.use(
+    '/logout',
+    rateLimiter({
+        endpoint: '/api/v1/auth/logout',
+        rateLimit: {
+            time: 60,
+            limit: 20,
+        },
+    }),
+    verifyToken,
+    logout,
+);
 
 module.exports = router;
