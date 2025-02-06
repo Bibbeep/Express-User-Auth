@@ -5,8 +5,6 @@ if (process.env.NODE_ENV !== 'production') {
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
-const swaggerUI = require('swagger-ui-express');
-const swaggerSpec = require('./configs/swagger');
 const routes = require('./routes/index.routes');
 const errorHandler = require('./utils/errorHandler');
 
@@ -23,7 +21,6 @@ app.use(morgan('dev'));
 app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 
-app.use('/api/v1/docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 app.use('/api/v1', routes);
 app.use(errorHandler);
 

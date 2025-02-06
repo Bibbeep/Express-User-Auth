@@ -1,19 +1,37 @@
 const swaggerJSDoc = require('swagger-jsdoc');
+const { version, description } = require('../../package.json');
+const {
+    RegisterRequestBody,
+    RegisterSuccessResponse201,
+    RegisterFailedResponse400,
+    RegisterFailedResponse409,
+    FailedResponse500,
+} = require('../validations/userSchema');
 
 const options = {
     definition: {
-        openapi: '3.0.0',
+        openapi: '3.1.0',
         info: {
             title: 'Express User Auth API',
-            version: '1.0.0',
-            description:
-                'A containerized REST API for user authentication using Node.js, Express.js, PostgreSQL, and Docker.',
+            version,
+            description,
         },
-        servers: [
-            {
-                url: process.env.BASE_URL || 'http://localhost:3000',
+        components: {
+            securitySchemas: {
+                bearerAuth: {
+                    type: 'http',
+                    scheme: 'bearer',
+                    bearerFormat: 'JWT',
+                },
             },
-        ],
+            schemas: {
+                RegisterRequestBody,
+                RegisterSuccessResponse201,
+                RegisterFailedResponse400,
+                RegisterFailedResponse409,
+                FailedResponse500,
+            },
+        },
     },
     apis: ['./src/routes/*.js'],
 };
