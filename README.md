@@ -26,10 +26,7 @@ To set up and run the app using Docker and Docker Compose, follow these steps:
     ```
 
 2. **Create a `.env` file:**
-    Create a `.env` file in the root directory and add the following variables:
-    ```env
-    -- To be determined --
-    ```
+    Create a `.env` file in the root directory and please refers to `.env.example`
 
 3. **Build and run the containers:**
     ```bash
