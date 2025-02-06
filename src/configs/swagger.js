@@ -6,6 +6,10 @@ const {
     RegisterFailedResponse400,
     RegisterFailedResponse409,
     FailedResponse500,
+    LoginRequestBody,
+    LoginSuccessResponse200,
+    LoginFailedResponse400,
+    LoginFailedResponse401,
 } = require('../validations/userSchema');
 
 const options = {
@@ -30,6 +34,10 @@ const options = {
                 RegisterFailedResponse400,
                 RegisterFailedResponse409,
                 FailedResponse500,
+                LoginRequestBody,
+                LoginSuccessResponse200,
+                LoginFailedResponse400,
+                LoginFailedResponse401,
             },
         },
     },
