@@ -10,6 +10,8 @@ const {
     LoginSuccessResponse200,
     LoginFailedResponse400,
     LoginFailedResponse401,
+    LogoutSuccessResponse200,
+    LogoutFailedResponse401,
 } = require('../validations/userSchema');
 
 const options = {
@@ -38,6 +40,8 @@ const options = {
                 LoginSuccessResponse200,
                 LoginFailedResponse400,
                 LoginFailedResponse401,
+                LogoutSuccessResponse200,
+                LogoutFailedResponse401,
             },
         },
     },

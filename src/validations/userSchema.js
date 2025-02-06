@@ -437,6 +437,93 @@ const LoginFailedResponse401 = {
     },
 };
 
+const LogoutSuccessResponse200 = {
+    type: 'object',
+    properties: {
+        success: {
+            type: 'boolean',
+        },
+        statusCode: {
+            type: 'integer',
+        },
+        data: {
+            type: 'object',
+            nullable: true,
+        },
+        message: {
+            type: 'string',
+        },
+        errors: {
+            type: 'array',
+            nullable: true,
+        },
+    },
+    example: {
+        success: true,
+        statusCode: 200,
+        data: null,
+        message: 'Successfully logged out.',
+        errors: null,
+    },
+};
+
+const LogoutFailedResponse401 = {
+    type: 'object',
+    properties: {
+        success: {
+            type: 'boolean',
+        },
+        statusCode: {
+            type: 'integer',
+        },
+        data: {
+            type: 'object',
+            nullable: true,
+        },
+        message: {
+            type: 'string',
+        },
+        errors: {
+            type: 'array',
+            items: {
+                type: 'object',
+                properties: {
+                    message: {
+                        type: 'string',
+                    },
+                    context: {
+                        type: 'object',
+                        properties: {
+                            key: {
+                                type: 'string',
+                            },
+                            value: {
+                                type: ['string', 'integer', 'object'],
+                                nullable: true,
+                            },
+                        },
+                    },
+                },
+            },
+        },
+    },
+    example: {
+        success: false,
+        statusCode: 401,
+        data: null,
+        message: 'Invalid or expired token.',
+        errors: [
+            {
+                message: 'Invalid or expired token',
+                context: {
+                    key: 'request.headers.authorization',
+                    value: null,
+                },
+            },
+        ],
+    },
+};
+
 module.exports = {
     registerSchema,
     loginSchema,
@@ -449,4 +536,6 @@ module.exports = {
     LoginSuccessResponse200,
     LoginFailedResponse400,
     LoginFailedResponse401,
+    LogoutSuccessResponse200,
+    LogoutFailedResponse401,
 };
