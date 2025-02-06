@@ -85,6 +85,43 @@ router.use('/register', register);
  *               $ref: '#/components/schemas/FailedResponse500'
  */
 router.use('/login', login);
+
+/**
+ * @openapi
+ * /api/v1/auth/logout:
+ *   post:
+ *     summary: Logs out a user account
+ *     tags: [User Authentication]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: header
+ *         name: Authorization
+ *         description: Bearer JWT access token
+ *         schema:
+ *           type: string
+ *           format: JWT
+ *         required: true
+ *     responses:
+ *       200:
+ *         description: User logged out successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/LogoutSuccessResponse200'
+ *       401:
+ *         description: Invalid or expired token
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/LogoutFailedResponse401'
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/FailedResponse500'
+ */
 router.use('/logout', verifyToken, logout);
 
 module.exports = router;
