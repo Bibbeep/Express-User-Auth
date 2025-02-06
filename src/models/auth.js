@@ -18,7 +18,7 @@ class Auth {
                 'The email address is already in use. Please use a different email address or log in.',
                 [
                     {
-                        message: '"email" is already registered.',
+                        message: '"email" is already registered',
                         context: {
                             key: 'email',
                             value: email,
