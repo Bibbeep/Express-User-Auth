@@ -37,7 +37,7 @@ module.exports = (err, req, res, next) => {
                           },
                       };
                   })
-                : [],
+                : null,
         });
     } else {
         console.error(err);
