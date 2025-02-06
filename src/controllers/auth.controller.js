@@ -1,5 +1,5 @@
 const AuthModel = require('../models/auth');
-const { validateRegister } = require('../utils/validator');
+const { validateRegister, validateLogin } = require('../utils/validator');
 
 module.exports = {
     register: async (req, res, next) => {
@@ -29,7 +29,23 @@ module.exports = {
     },
     login: async (req, res, next) => {
         try {
-            /* Empty */
+            const { error, value } = validateLogin(req.body);
+
+            if (error) {
+                throw error;
+            }
+
+            const accessToken = await AuthModel.login(value);
+
+            return res.status(200).json({
+                success: true,
+                statusCode: 200,
+                data: {
+                    accessToken,
+                },
+                message: 'Successfully logged in.',
+                errors: null,
+            });
         } catch (err) {
             next(err);
         }
