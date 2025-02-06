@@ -52,7 +52,15 @@ module.exports = {
     },
     logout: async (req, res, next) => {
         try {
-            /* Empty */
+            await AuthModel.logout(req);
+
+            return res.status(200).json({
+                success: true,
+                statusCode: 200,
+                data: null,
+                message: 'Successfully logged out.',
+                errors: null,
+            });
         } catch (err) {
             next(err);
         }

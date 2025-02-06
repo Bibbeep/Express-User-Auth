@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { pool } = require('../configs/database');
+const { getClient } = require('../configs/redis');
 const HTTPError = require('../utils/httpError');
 const { JWT_SECRET } = process.env;
 
@@ -90,6 +91,7 @@ class Auth {
             {
                 id: result.rows[0].id,
                 username: result.rows[0].username,
+                role: result.rows[0].role,
             },
             JWT_SECRET,
             {
@@ -100,6 +102,24 @@ class Auth {
         client.release();
 
         return accessToken;
+    }
+
+    static async logout(data) {
+        const { userId, tokenExp, token } = data;
+
+        // Set the TTL of the blacklisted token to the remaining token expiration time in seconds
+        const ttl = tokenExp - Math.floor(Date.now() / 1000);
+
+        // Added logout datetime information
+        const now = new Date(Date.now());
+        const nowString = `${now.toLocaleDateString()} ${now.toTimeString()}`;
+
+        const redis = await getClient();
+        redis.setEx(
+            `blacklist_${token}`,
+            ttl,
+            `userId ${userId} logged out at ${nowString}`,
+        );
     }
 }
 
